@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://cdn.plot.ly/plotly-2.11.1.min.js"></script>
+    <title>OPT</title>
+  </head>
+  <body>
+    <nav class="navbar bg-light">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Hot tubs</span>
+        <img src="https://c.tenor.com/MeYqPMlBM7UAAAAd/hot-tubs-itpedia.gif" height="100px"></img>
+        <img src="https://c.tenor.com/MeYqPMlBM7UAAAAd/hot-tubs-itpedia.gif" height="100px"></img>
+        <img src="https://c.tenor.com/MeYqPMlBM7UAAAAd/hot-tubs-itpedia.gif" height="100px"></img>
+        <img src="https://c.tenor.com/MeYqPMlBM7UAAAAd/hot-tubs-itpedia.gif" height="100px"></img>
+        <img src="https://c.tenor.com/MeYqPMlBM7UAAAAd/hot-tubs-itpedia.gif" height="100px"></img>
+      </div>
+    </nav>
+
+    <!-- <div class="container text-center"> -->
+    <div class="row">
+      <div class="col">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">Функція</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="функція"
+            id="func"
+            value="4 * Math.pow(x[0] + 2, 2) + 16 * Math.pow(x[1] + 5, 2) + 49 * Math.pow(x[2] - x[1], 2) + 10 "
+          />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1"
+            >Початкова точка</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            placeholder="[0,0,0]"
+            id="startPoint"
+            value="[0,0,0]"
+          />
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">Крок</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="1"
+            id="step"
+            value="1"
+          />
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1"
+            >Кількості невдалих кроків</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="mmax"
+            placeholder="15"
+            value="15"
+          />
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">Похибка</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="0.0001"
+            id="eRR"
+            value="0.0001"
+          />
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">Нижня межа</span>
+          <input
+            type="text"
+            class="form-control"
+            id="amin"
+            placeholder="[-6,-3,-5]"
+            value="[-6,-3,-5]"
+          />
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">Верхня межа</span>
+          <input
+            type="text"
+            class="form-control"
+            id="amax"
+            placeholder="[3,1,2]"
+            value="[3,1,2]"
+          />
+        </div>
+
+        <button type="button" class="btn btn-primary" id="start">
+          Розрахунок
+        </button>
+
+        <button type="button" class="btn btn-primary" id="start">
+          Порівняти
+        </button>
+
+        
+
+        <div>
+          <p>Точка мінімуму:<span id="min"></span></br>
+          Значення функції:<span id="f_x"></span></br>
+          Кількість ітерацій:<span id="count"></span></br>
+          Кількість обчислень функції :<span id="fcount"></span></p>
+        </div>
+      </div>
+     
+      <div class="col">
+        
+        <div id="content">
+          <div id="plot" style="height: 700px; width: 700px;" ></div>
+        </div>
+        
+      </div>
+    </div>
+    <!-- </div> -->
+    <script type="module" src="js/Recognizer.js"></script>
+    <script type="module" src="js/MathFunction.js"></script>
+    <script type="module" src="js/Optimizer.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
