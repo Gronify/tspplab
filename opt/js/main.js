@@ -1,4 +1,5 @@
 import Drawer from "./Drawer.js";
+import History from "./History.js";
 import MathFunction from "./MathFunction.js";
 import Optimizer from "./Optimizer.js";
 import Recognizer from "./Recognizer.js";
@@ -27,7 +28,7 @@ function Diagram() {
   const func = new MathFunction(document.getElementById("func").value);
 
   const optimizer = new Optimizer(func);
-  console.log(startPoint);
+
   const result = optimizer.findAnswer(
     startPoint[0],
     startPoint[1],
@@ -39,10 +40,14 @@ function Diagram() {
     mmax
   );
 
+  // window.resopt = JSON.stringify(result);
   const drawer = new Drawer(result);
 
   drawer.drawPlot("plot");
 
+  const history = new History();
+  history.save(JSON.stringify(result));
+  drawHistory(history.read());
   minE.innerHTML = `(${
     Math.round((result.x[0] + Number.EPSILON) * 100) / 100
   } ;${Math.round((result.x[1] + Number.EPSILON) * 100) / 100}; ${
@@ -53,7 +58,37 @@ function Diagram() {
   fcount.innerHTML = `${result.fcount}`;
 }
 
-const start = document.getElementById("start");
-start.addEventListener("click", Diagram);
+function drawHistory(history) {
+  console.log("====================================");
+  console.log(history);
+  console.log("====================================");
 
-// window.addEventListener("load", Diagram);
+  document.getElementById("historylist").innerHTML = history
+    .reverse()
+    .map((node, id) => {
+      let nodeh = JSON.parse(node);
+
+      return `<li class="list-group-item">${history.length - id} - ${
+        nodeh.count
+      }, ${nodeh.fcount}</li>`;
+    })
+    .join("");
+}
+
+function loadEvent() {
+  const history = new History();
+  drawHistory(history.read());
+}
+
+function downloadJSON() {
+  const download = document.getElementById("downloadLink");
+  const history = new History();
+  console.log(window.resopt);
+  download.href = history.save(window.resopt);
+}
+
+const start = document.getElementById("start");
+const download = document.getElementById("downloadLink");
+start.addEventListener("click", Diagram);
+// download.addEventListener("click", downloadJSON);
+window.addEventListener("load", loadEvent);

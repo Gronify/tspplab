@@ -11,6 +11,14 @@ export default class Drawer {
         y: result.y_arr,
         z: result.z_arr,
       },
+
+      // {
+      //   opacity: 1,
+      //   type: "scatter3d",
+      //   x: result.x_arr,
+      //   y: result.y_arr,
+      //   z: result.z_arr,
+      // },
     ];
 
     this.layout = {
