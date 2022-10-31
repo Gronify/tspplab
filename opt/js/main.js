@@ -4,7 +4,7 @@ import MathFunction from "./MathFunction.js";
 import Optimizer from "./Optimizer.js";
 import Recognizer from "./Recognizer.js";
 
-function Diagram() {
+function Diagram(lastid, prelastid) {
   const minE = document.getElementById("min");
   const count = document.getElementById("count");
   const f_x = document.getElementById("f_x");
@@ -41,11 +41,25 @@ function Diagram() {
   );
 
   // window.resopt = JSON.stringify(result);
-  const drawer = new Drawer(result);
-
-  drawer.drawPlot("plot");
 
   const history = new History();
+  const historylist = history.read();
+  console.log("====================================");
+  console.log(lastid);
+  console.log("====================================");
+
+  try {
+    const drawer = new Drawer(
+      JSON.parse(historylist[lastid]),
+      JSON.parse(historylist[prelastid])
+    );
+    drawer.drawPlot("plot");
+    return;
+  } catch (error) {
+    const drawer = new Drawer(result);
+    drawer.drawPlot("plot");
+  }
+
   history.save(JSON.stringify(result));
   drawHistory(history.read());
   minE.innerHTML = `(${
@@ -68,9 +82,17 @@ function drawHistory(history) {
     .map((node, id) => {
       let nodeh = JSON.parse(node);
 
-      return `<li class="list-group-item">${history.length - id} - ${
+      return `<li class="list-group-item">${
+        history.length - id
+      } - min:${Math.round(nodeh.fmin)},minPoint: [${Math.round(
+        nodeh.x[0]
+      )},${Math.round(nodeh.x[1])},${Math.round(nodeh.x[2])}], ${
         nodeh.count
-      }, ${nodeh.fcount}</li>`;
+      }, ${
+        nodeh.fcount
+      } <button type="button" class="btn btn-primary" onclick="compareLastId(${id})">
+      Обрати для порівняння
+    </button></li>`;
     })
     .join("");
 }
@@ -88,7 +110,14 @@ function downloadJSON() {
 }
 
 const start = document.getElementById("start");
+const compare = document.getElementById("compare");
 const download = document.getElementById("downloadLink");
 start.addEventListener("click", Diagram);
+compare.addEventListener("click", () =>
+  Diagram(
+    document.getElementById("historylistid").innerHTML,
+    document.getElementById("historylistidlast").innerHTML
+  )
+);
 // download.addEventListener("click", downloadJSON);
 window.addEventListener("load", loadEvent);
